@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="sf.css">
+</head>
+<body>
+
+    
+<center id="gf">
+    <h6 style="font-size:30px ;">hozirgi soat:</h6>
+    <h3 id="clock" style="font-size: 40px;"></h3>
+
+<h6 id="sana" style="font-size:30px ;">bagungi sana:</h6>
+<h3 id="data" style="font-size: 40px;"></h3>
+
+<script>
+setInterval (function () {
+let nov = new Date();
+let date = document.getElementById("data");
+date.innerHTML = nov.toLocaleDateString();
+});
+
+setInterval (function () {
+let now = new Date();
+let clock = document.getElementById("clock");
+clock.innerHTML = now.toLocaleTimeString();
+}, 1000);
+</script>
+</center>
+    <div class="input-box">
+        <input id="f" class="form-control w-50" type="text" placeholder="Qanday kino?">
+        <button class="btn btn-danger" onclick="search_func()">Qidirish</button>
+    </div>
+
+    <div class="container kino-box">
+
+    </div>
+
+    <script>
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+        }
+    </script>
+    
+<script>
+  let kinobox = document.querySelector(".kino-box")
+function search_func() {
+let input = document.querySelector("input")
+fetch(`https://www.omdbapi.com/?s=${input.value}&apikey=787478be`)
+.then(res => res.json())
+.then(kinolar => {
+    let barchaKino = kinolar.Search
+    kinobox.innerHTML = ""
+    kinobox.style.display = "flex";
+    kinobox.style.flexWrap = "wrap";
+    try {
+        barchaKino.forEach(kino => {
+            let div = document.createElement("div")
+            div.setAttribute("class", "kino")
+            div.innerHTML = `
+            <div class="card m-3" style="width: 18rem;">
+            <img class="card-img-top" src="${kino.Poster}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">${kino.Title}</h5>
+                    <p class="card-text">${kino.Year}</p>
+                    <a href="#" class="btn btn-primary">Ko'proq ma'lumot</a>
+                </div>
+            </div>
+            `
+            kinobox.appendChild(div)
+        })
+    } catch (e) {
+        alert("Kino topilmadi!!!")
+    }
+    ;
+})
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: black;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .input-box {
+   
+    margin: 100px;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+center{
+    
+    color: white;
+}
